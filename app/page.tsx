@@ -15,37 +15,24 @@ import { HARDCODED_NEWS_ITEMS, LOGO_LETTERS } from "@/utils/texts/all-texts";
 import Image from "next/image";
 import { useSearchParams } from 'next/navigation'
 import GameRoom from '@/components/room/game-room';
+import { useRouter } from 'next/navigation'
+
+import { socket } from '@/lib/socket'
+import { LanguageType } from '@/utils/props/all-props';
+import { Suspense } from 'react'
 
 export default function Home() {
   const [roomId, setRoomId] = useState('')
-  const searchParams = useSearchParams()
+  const [activeAvatarIndex, setActiveAvatarIndex] = useState(0)
+  const [enteredUserName, setEnteredUserName] = useState('')
+  const [selectedLanguage, setSelectedLanguage] = useState<LanguageType>('ENGLISH')
 
   useEffect(() => {
-    const curRoomId = searchParams.get('roomId')
 
-    async function checkRoom() {
-
-      const res = await fetch(
-        `http://localhost:3001/room/${curRoomId}`
-      )
-
-      if (!res.ok) {
-        console.log('Room does not exist')
-        return
-      }
-      setRoomId(curRoomId || '')
-    }
-
-    if(curRoomId){
-      checkRoom()
-    }
-
-  }, [roomId])
-
-  // remove this 
-  console.log(roomId);
+  }, [])
 
   return (
+    <Suspense fallback={null}>
     <div
       className="min-h-screen flex flex-col bg-[#0f0f23] text-[#e8e8e8]"
       style={{ fontFamily: "'Press Start 2P', monospace", imageRendering: 'pixelated' }}
@@ -58,12 +45,12 @@ export default function Home() {
       />
 
       {/* CRT vignette */}
-      {/* <div
+      <div
         className="fixed inset-0 pointer-events-none z-40"
         style={{ background: 'radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%)' }}
-      /> */}
+      />
 
-      {!roomId && (
+      {!roomId ? (
         <>
           <Navbar />
           <div className="w-full h-1 bg-[#ffd700]" />
@@ -76,20 +63,30 @@ export default function Home() {
             </p>
 
             {/* avatar view + game starting card */}
-            <GameStartingCard setRoomId={setRoomId} />
-
+            <GameStartingCard
+              selectedLanguage={selectedLanguage}
+              setSelectedLanguage={setSelectedLanguage}
+              setRoomId={setRoomId}
+              enteredUserName={enteredUserName}
+              setEnteredUserName={setEnteredUserName}
+              activeAvatarIndex={activeAvatarIndex}
+              setActiveAvatarIndex={setActiveAvatarIndex} />
+            
+            {/* information section */}
             <InformationSection />
           </main>
         </>
+      ) : (
+        <GameRoom
+          selectedLanguage={selectedLanguage}
+          enteredUserName={enteredUserName}
+          activeAvatarIndex={activeAvatarIndex}
+          roomId={roomId}
+        />
       )}
-
-      {roomId && (
-        <GameRoom roomId={roomId}/>
-      )
-
-      }
 
       <Footer />
     </div>
+    </Suspense>
   );
 }

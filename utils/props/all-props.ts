@@ -1,6 +1,8 @@
 import { WithStringifiedURLs } from "next/dist/lib/metadata/types/metadata-interface";
 import { AVATAR_COLORS } from "../colors/all-colors";
 
+export type LanguageType = 'ENGLISH' | 'FRENCH' | 'GERMAN' | 'SPANISH'
+
 export type PixelAvatarProps = {
     color : AvatarColorType
     scale: number
@@ -24,4 +26,19 @@ export type InfoCardProps = {
   accentColor: string   
   borderColor: string   
   children: React.ReactNode
+}
+
+export type PixelSelectColor =
+  | 'pink'
+  | 'green'
+  | 'cyan'
+  | 'yellow'
+
+export type PixelSelectProps = {
+  value: string | number
+  onChange: (value: string) => void
+  options: (string | number)[]
+  disabled?: boolean
+  color?: PixelSelectColor
+  height?: string
 }

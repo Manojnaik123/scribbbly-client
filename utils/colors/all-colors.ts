@@ -12,3 +12,25 @@ export const CANVAS_COLORS = [
   '#ff00ff', // magenta
   '#00ffff', // cyan
 ]
+
+export const pixelSelectColorMap = {
+  pink: {
+    border: 'border-[#ff77a8]',
+    text: 'text-[#ff77a8]',
+  },
+
+  green: {
+    border: 'border-[#00ff41]',
+    text: 'text-[#00ff41]',
+  },
+
+  cyan: {
+    border: 'border-[#00e5ff]',
+    text: 'text-[#00e5ff]',
+  },
+
+  yellow: {
+    border: 'border-[#ffd700]',
+    text: 'text-[#ffd700]',
+  }
+}

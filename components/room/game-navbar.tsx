@@ -5,9 +5,8 @@ export default function GameNavbar({ roomName }: { roomName: string }) {
                 SKRIBBBLY
             </span>
             <div className="flex items-center gap-3">
-                <span className="text-[8px] text-[#ffd700]">ROOM ID:</span>
-                <span className="text-[8px] text-[#00ff41] border border-[#00ff41] px-2 py-1">{roomName}</span>
-                {/* <div className="w-7 h-7 border-2 border-[#555588] flex items-center justify-center text-[14px]">👤</div> */}
+                <span className="text-[8px] text-[#ffd700]">Invite link:</span>
+                <span className="text-[8px] text-[#00ff41] border border-[#00ff41] px-2 py-1">{`http://localhost:3000/?roomId=${roomName}`}</span>
             </div>
         </nav>
     )

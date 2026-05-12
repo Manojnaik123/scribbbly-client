@@ -1,0 +1,1 @@
+export const SOCKET_JOIN_ROOM = 'join-room'
